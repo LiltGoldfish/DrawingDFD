@@ -1,0 +1,192 @@
+<div class="page">
+  <div class="menus" [class.clicked]="menuClicked" (click)="onClickMenu($event)">
+    <div class="item">
+      <a>
+        文件
+      </a>
+      <div class="dropdown">
+        <div class="item">
+          <a (click)="onMenu('new')">
+            新建文件
+          </a>
+        </div>
+        <div class="item">
+          <a (click)="onMenu('open')">
+            打开本地Json文件（新建）
+            <span class="ml50">Ctrl + O</span>
+          </a>
+        </div>
+        <div class="item">
+          <a (click)="onMenu('open', true)">
+            导入Json文件到当前画布
+            <span class="ml50">Ctrl + I</span>
+          </a>
+        </div>
+        <div class="item" (mouseenter)="showFigure = true" (mouseleave)="onLeaveFigure()">
+          <a>
+            打开最近的文件
+            <i class="iconfont icon-angle-right"></i>
+          </a>
+          <div class="dropdown pt15" [class.block]="showFigure">
+            <figure>
+              <div *ngIf="list.recently.length" class="mb20">
+                <div class="flex wrap">
+                  <a class="topo" *ngFor="let item of list.recently;let i=index" [title]="item.name"
+                    routerLink="/workspace" [queryParams]="{ id: item.id, version: item.version }">
+                    <img [appImgAuthSrc]="item.image" />
+                    <i class="iconfont icon-delete" (click)="onRemoveRecently($event, i)"></i>
+                  </a>
+                </div>
+              </div>
+            </figure>
+          </div>
+        </div>
+        <div [class.disabled]="!editMode">
+          <div class="item line"></div>
+          <div class="item">
+            <a (click)="onMenu('downPng')">
+              下载为PNG
+            </a>
+          </div>
+          <div class="item">
+            <a (click)="onMenu('downSvg')">
+              下载为SVG
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <a>编辑</a>
+      <div class="dropdown" [class.disabled]="!editMode">
+        <div class="item">
+          <a (click)="onMenu('undo')">
+            撤消
+            <span class="ml50">Ctrl + Z</span>
+          </a>
+        </div>
+        <div class="item">
+          <a (click)="onMenu('redo')">
+            恢复
+            <span class="ml50">Ctrl + Shift+ Z</span>
+          </a>
+        </div>
+        <div class="item line"></div>
+        <div class="item">
+          <a (click)="onMenu('cut')">
+            剪切
+            <span class="ml50">Ctrl + X</span>
+          </a>
+        </div>
+        <div class="item">
+          <a (click)="onMenu('copy')">
+            复制
+            <span class="ml50">Ctrl + C</span>
+          </a>
+        </div>
+        <div class="item">
+          <a (click)="onMenu('parse')">
+            粘贴
+            <span class="ml50">Ctrl + V</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="full"></div>
+    <div class="flex">
+      <div class="item mh5">
+        <a (click)="onMenu('fullscreen', 1)" style="padding-right: 0;">
+          全屏
+          <i class="iconfont icon-full-screen rel" style="top:1px; margin-left: 2px"></i>
+        </a>
+      </div>
+    </div>
+    <div class="flex" [class.disabled]="!editMode">
+      <div class="separator"></div>
+      <div class="item mh5">
+        视图：{{ scale | number: ".0-2" }}%
+        <a class="hover" *ngIf="scale !== 100" (click)="onMenu('scale', 1)" style="padding-right: 0;">
+          还原
+        </a>
+      </div>
+      <div class="separator"></div>
+      <div *ngIf="!locked" class="item" (click)="locked = !locked; onMenu('lock', 1)" title="锁定">
+        <a>
+          <i class="iconfont icon-unlock"></i>
+        </a>
+      </div>
+      <div *ngIf="locked" class="item" (click)="locked = !locked; onMenu('lock', 0)" title="解锁">
+        <a>
+          <i class="iconfont icon-lock"></i>
+        </a>
+      </div>
+      <div class="separator"></div>
+      <div class="item lines">
+        <a>
+          <i class="iconfont icon-{{ lineName }}" style="position: relative;top: .06rem;"></i>
+        </a>
+        <div class="dropdown">
+          <div class="item">
+            默认连线类型：
+          </div>
+          <div class="item" *ngFor="let item of lineNames">
+            <a (click)="onSelLine(item.value)" style="justify-content:initial">
+              <span class="inline" style="width: .8rem;">{{item.name}}：</span>
+              <i class="iconfont icon-{{ item.value }}"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="item lines">
+        <a>
+          <i class="iconfont icon-from-{{ fromArrowType }}" style="position: relative;top: .06rem;"></i>
+        </a>
+        <div class="dropdown">
+          <div class="item">
+            默认起点箭头：
+          </div>
+          <div class="item" *ngFor="let item of arrowTypes">
+            <a (click)="onSelFromArrow(item)">
+              <i class="iconfont icon-from-{{ item }}"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="item lines">
+        <a>
+          <i class="iconfont icon-to-{{ toArrowType }}" style="position: relative;top: .06rem;"></i>
+        </a>
+        <div class="dropdown">
+          <div class="item">
+            默认终点箭头：
+          </div>
+          <div class="item" *ngFor="let item of arrowTypes">
+            <a (click)="onSelToArrow(item)">
+              <i class="iconfont icon-to-{{ item }}"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="separator"></div>
+      <div class="item">
+        <a (click)="onMenu('down')" title="直接点击图标，保存json到本地">
+          <i class="iconfont icon-download"></i>
+        </a>
+        <div class="dropdown">
+          <div class="item">
+            <a (click)="onMenu('downZip')">打包下载Json和图片</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <div class="flex pr20" *ngIf="!user">
+  		江苏师范大学-智慧教育学院
+    </div>
+  </div>
+  <div class="body">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<img src="/assets/img/logo.png" hidden="hidden" />

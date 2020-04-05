@@ -1,0 +1,68 @@
+<div class="flex">
+  <div class="tools">
+    <div *ngFor="let item of tools">
+      <div class="title">{{ item.group }}</div>
+      <div class="buttons">
+        <a *ngFor="let button of item.children" [title]="button.name" [draggable]="button.data"
+          (dragstart)="onDrag($event, button)" (touchstart)="onTouchstart(button)">
+          <i class="iconfont {{ button.icon }}"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="full">
+    <div class="canvas" #workspace (contextmenu)="onContextMenu($event)"></div>
+    <div class="flex ph15 pv5">
+      <div class="full flex">
+        文件名：
+        <label *ngIf="!editFilename" (dblclick)="onEditFile(filenameInput)" title="双击编辑，点击空白保存">{{data.name}}</label>
+        <form class="inline" [class.hidden]="!editFilename" #myForm="ngForm" [uiTouchForm]="myForm" title="双击编辑，点击空白保存">
+          <input name="filename" #filenameInput class="input" [(ngModel)]="data.name" (blur)="onSaveFilename()"
+            required />
+        </form>
+        <i class="iconfont icon-edit" *ngIf="!editFilename" (click)="onEditFile(filenameInput)" title="双击编辑，点击空白保存"></i>
+      </div>
+      <div *ngIf="data.id">
+        <a routerLink="/user/history" [queryParams]="{ id: data.id, name: data.name }">-> 文件历史</a>
+      </div>
+    </div>
+  </div>
+  <div class="props">
+    <div class="pv5">
+      <div *ngIf="!selected">
+        <div class="title">欢迎使用DFD绘制工具</div>
+        <div class="ml30 mb20 mt10">
+          <a href="https://jingyan.baidu.com/article/4f34706eefdb04e387b56deb.html" target="_blank" class="block mt20 mb15"
+            style="color:#f60!important;text-decoration: underline;">怎么绘制数据流图？</a>
+          <a href="https://baike.baidu.com/item/DFD%E5%9B%BE/2827172?fr=aladdin" target="_blank">什么是数据流图？</a><br />
+        </div>
+        <div class="title mt30">单张数据流图，必须注意以下原则</div>
+        <ul class="ml30 mb20 mt10">
+          <li>1.一个加工的输出数据流不应与输入数据流同名，即使它们的组成成分相同。 </li><br />
+          <li>2.保持数据守恒。</li><br />
+          <li>3.每个加工必须既有输入数据流，又有输出数据流。</li><br />
+          <li>4.所有的数据流必须以一个外部实体开始，并以一个外部实体结束。</li><br />
+          <li>5.外部实体之间不应该存在数据流。</li><br />
+        </ul>
+        <div class="abs" style="bottom:.2rem">
+          <div class="title mt30">
+            小提示
+          </div>
+          <ul class="ml30 mb20 mt10">
+            <li>方向键：控制节点移动5个像素</li>
+            <li>Ctrl + 方向键：控制节点移动1个像素</li>
+            <li>Ctrl + 鼠标移动：移动整个画布</li>
+            <li>Ctrl + 鼠标滚轮：缩放</li>
+            <li>添加或选中节点，右侧属性支持上传各种图片哦</li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="selected">
+        <app-props [props]="selected" [readonly]="readonly" (ok)="onChangeProps($event)"
+          (animateChange)="onAnimateChange()"></app-props>
+      </div>
+    </div>
+  </div>
+</div>
+<app-context-menu [contextmenu]="contextmenu" [canvas]="canvas" [selNodes]="selNodes" [selected]="selected"
+  [locked]="locked"></app-context-menu>

@@ -1,0 +1,50 @@
+<div class="context-menus" id="canvas-menus" [ngStyle]="contextmenu">
+  <div>
+    <a [class.disabled]="!selNodes" (click)="onTop()">
+      置顶
+    </a>
+  </div>
+  <div>
+    <a [class.disabled]="!selNodes" (click)="onBottom()">
+      置底
+    </a>
+  </div>
+  <div class="line"></div>
+  <div>
+    <a [class.disabled]="!selNodes" (click)="onDel()">
+      删除
+    </a>
+  </div>
+  <div class="line"></div>
+  <div>
+    <a (click)="canvas.undo()" class="flex">
+      <span class="full">撤消</span>
+      <span class="ml50">Ctrl + Z</span>
+    </a>
+  </div>
+  <div>
+    <a (click)="canvas.redo()">
+      恢复
+      <span class="ml50">Ctrl + Shift+ Z</span>
+    </a>
+  </div>
+  <div class="line"></div>
+  <div>
+    <a (click)="canvas.cut()" class="flex">
+      <span class="full">剪切</span>
+      <span class="ml50">Ctrl + X</span>
+    </a>
+  </div>
+  <div>
+    <a (click)="canvas.copy()" class="flex">
+      <span class="full">复制</span>
+      <span class="ml50">Ctrl + C</span>
+    </a>
+  </div>
+  <div>
+    <a (click)="canvas.parse()" class="flex">
+      <span class="full">粘贴</span>
+      <span class="ml50">Ctrl + V</span>
+    </a>
+  </div>
+</div>
