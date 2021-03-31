@@ -142,10 +142,10 @@ isarray@~1.0.0:
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
   integrity sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=
 
-le5le-store@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/le5le-store/-/le5le-store-1.0.1.tgz#73b2e0610f92b99b4d4ecd29e82b3bada7fc224d"
-  integrity sha512-g7kAC9zJwzlaRMs17xCGqAIEW461RylJOmmlVGoiiu3RdwUoyJdKuFwFIpJNtrEwzXC7X+Qtt9exsQrbJGGe1A==
+le5le-store@^1.0.2:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/le5le-store/-/le5le-store-1.0.7.tgz#73417e00cbd3d8a1010b31795496323adfc7bc47"
+  integrity sha512-8XnDf8RUoHsKXUQHSw2vHEbEw4UbDHGulw/r/YRXf2NA1EUvMD/UUjGvbMAB1vz3UN8smvOxR6CTyjpK/Zhn2w==
 
 locate-path@^3.0.0:
   version "3.0.0"
@@ -337,9 +337,9 @@ xtend@~4.0.1:
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
 
 y18n@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.0.tgz#95ef94f85ecc81d007c264e190a120f0a3c8566b"
-  integrity sha512-r9S/ZyXu/Xu9q1tYlpsLIsa3EeLXXk0VwlxqTcFRfg9EhMW+17kbt9G0NrgCmhGb5vT2hyhJZLfDGx+7+5Uj/w==
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.1.tgz#8db2b83c31c5d75099bb890b23f3094891e247d4"
+  integrity sha512-wNcy4NvjMYL8gogWWYAO7ZFWFfHcbdbE57tZO8e4cbpj8tfUcwrwqSl3ad8HxpYWCdXcJUCeKKZS62Av1affwQ==
 
 yargs-parser@^13.1.1:
   version "13.1.1"
